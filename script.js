@@ -658,3 +658,289 @@ step5=function(){
     updateVisualization();
 
 };
+/* ===========================================
+   Hamming Lab
+   Part 5
+   Performance Analysis
+=========================================== */
+
+
+const prob =
+document.getElementById("prob");
+
+
+const probText =
+document.getElementById("probText");
+
+
+const runBtn =
+document.getElementById("run");
+
+
+const successBox =
+document.getElementById("success");
+
+
+const failBox =
+document.getElementById("fail");
+
+
+const rateBox =
+document.getElementById("rate");
+
+
+const theoryBox =
+document.getElementById("theory");
+
+
+const mode =
+document.getElementById("mode");
+
+
+const trial =
+document.getElementById("trial");
+
+
+
+let chart;
+
+
+
+// ===============================
+// 확률 표시
+// ===============================
+
+prob.addEventListener(
+"input",
+()=>{
+
+    probText.innerHTML =
+    prob.value+"%";
+
+});
+
+
+
+
+// ===============================
+// 랜덤 오류 생성
+// ===============================
+
+
+function randomError(code,p){
+
+
+    let bits =
+    code.split("");
+
+
+    for(let i=0;i<bits.length;i++){
+
+
+        if(Math.random()<p){
+
+
+            bits[i] =
+            bits[i]==="0"
+            ?"1"
+            :"0";
+
+
+        }
+
+    }
+
+
+    return bits.join("");
+
+}
+
+
+
+// ===============================
+// 이론 성공률
+// ===============================
+
+
+function theoryProbability(p){
+
+
+    return (
+
+        Math.pow(1-p,7)
+
+        +
+
+        7*p*Math.pow(1-p,6)
+
+    )*100;
+
+
+}
+
+
+
+// ===============================
+// 실험 실행
+// ===============================
+
+
+runBtn.addEventListener(
+"click",
+()=>{
+
+
+    let p =
+    Number(prob.value)/100;
+
+
+    let count =
+    Number(trial.value);
+
+
+
+    let success=0;
+
+    let fail=0;
+
+
+
+    for(let i=0;i<count;i++){
+
+
+        // 랜덤 4bit 생성
+
+        let data="";
+
+
+        for(let j=0;j<4;j++){
+
+            data +=
+            Math.random()<0.5
+            ?"0"
+            :"1";
+
+        }
+
+
+
+        let encoded =
+        encodeHamming(data);
+
+
+
+        let received;
+
+
+
+        // --------------------
+        // 오류 방식 선택
+        // --------------------
+
+        if(mode.value==="independent"){
+
+
+            received =
+            randomError(encoded,p);
+
+
+        }
+
+
+        else{
+
+
+            received =
+            burstError(encoded,p);
+
+
+        }
+
+
+
+        let syndrome =
+        calculateSyndrome(received);
+
+
+        let position =
+        findErrorPosition(syndrome);
+
+
+
+        let corrected =
+        correctError(
+            received,
+            position
+        );
+
+
+
+        let decoded =
+        decodeHamming(corrected);
+
+
+
+        if(decoded===data){
+
+            success++;
+
+        }
+
+        else{
+
+            fail++;
+
+        }
+
+
+    }
+
+
+
+    let rate =
+    success/count*100;
+
+
+
+    successBox.innerHTML =
+    success;
+
+
+    failBox.innerHTML =
+    fail;
+
+
+    rateBox.innerHTML =
+    rate.toFixed(2)+"%";
+
+
+
+    if(mode.value==="independent"){
+
+
+        theoryBox.innerHTML =
+        theoryProbability(p)
+        .toFixed(2)+"%";
+
+
+    }
+
+    else{
+
+
+        theoryBox.innerHTML =
+        "Burst Error는 일반식 적용 불가";
+
+
+    }
+
+
+
+    drawGraph(
+        success,
+        fail
+    );
+
+
+
+});
