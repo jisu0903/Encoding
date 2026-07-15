@@ -61,6 +61,7 @@ document.getElementById("syndromeData");
 
 const decodedBox =
 document.getElementById("decodedData");
+console.log(decodedBox);
 
 
 
