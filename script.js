@@ -944,3 +944,144 @@ runBtn.addEventListener(
 
 
 });
+/* ===========================================
+   Hamming Lab
+   Part 6
+   Burst Error + Graph
+=========================================== */
+
+
+
+// ===========================================
+// Burst Error
+// 연속된 구간에 오류 발생
+// ===========================================
+
+function burstError(code,p){
+
+
+    let bits =
+    code.split("");
+
+
+    if(Math.random()<p){
+
+
+        // 시작 위치
+
+        let start =
+        Math.floor(
+            Math.random()*7
+        );
+
+
+        // 오류 길이 2~3bit
+
+        let length =
+        Math.floor(
+            Math.random()*2
+        )+2;
+
+
+
+        for(
+            let i=start;
+            i<start+length && i<7;
+            i++
+        ){
+
+            bits[i] =
+            bits[i]==="0"
+            ?"1"
+            :"0";
+
+        }
+
+
+    }
+
+
+    return bits.join("");
+
+}
+
+
+
+
+
+// ===========================================
+// Chart.js 그래프
+// ===========================================
+
+function drawGraph(success,fail){
+
+
+
+    let ctx =
+    document
+    .getElementById("graph")
+    .getContext("2d");
+
+
+
+    if(chart){
+
+        chart.destroy();
+
+    }
+
+
+
+    chart =
+    new Chart(
+        ctx,
+        {
+
+        type:"bar",
+
+        data:{
+
+            labels:[
+                "복원 성공",
+                "복원 실패"
+            ],
+
+
+            datasets:[{
+
+                label:
+                "실험 결과",
+
+
+                data:[
+                    success,
+                    fail
+                ]
+
+            }]
+
+        },
+
+
+        options:{
+
+            responsive:true,
+
+
+            plugins:{
+
+                legend:{
+
+                    display:false
+
+                }
+
+            }
+
+        }
+
+    });
+
+
+
+}
