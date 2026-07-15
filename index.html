@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hamming Lab</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Hamming Lab</h1>
+
+<p>
+해밍 코드를 이용한 오류 정정 시뮬레이터
+</p>
+
+</header>
+
+
+<nav>
+
+<button class="tab active" data-page="demo">
+원리 이해
+</button>
+
+<button class="tab" data-page="analysis">
+성능 분석
+</button>
+
+</nav>
+
+
+<!-- ================================================= -->
+
+<section id="demo" class="page active">
+
+<div class="panel">
+
+<h2>원리 이해</h2>
+
+<label>
+
+원본 데이터(4bit)
+
+</label>
+
+<input
+id="inputData"
+type="text"
+value="1011"
+maxlength="4">
+
+<br>
+
+<button id="stepBtn">
+
+▶ STEP
+
+</button>
+
+<button id="resetBtn">
+
+RESET
+
+</button>
+
+</div>
+
+
+<div class="panel">
+
+<h3>진행 과정</h3>
+
+<div class="box">
+
+<div class="label">
+원본 데이터
+</div>
+
+<div id="originalData" class="binary">
+
+-
+
+</div>
+
+</div>
+
+
+<div class="arrow">
+
+↓
+
+</div>
+
+
+<div class="box">
+
+<div class="label">
+해밍 코드
+</div>
+
+<div id="encodedData" class="binary">
+
+-
+
+</div>
+
+</div>
+
+
+<div class="arrow">
+
+↓
+
+</div>
+
+
+<div class="box">
+
+<div class="label">
+수신 데이터
+</div>
+
+<div id="receivedData" class="binary">
+
+-
+
+</div>
+
+</div>
+
+
+<div class="arrow">
+
+↓
+
+</div>
+
+
+<div class="box">
+
+<div class="label">
+Syndrome
+
+</div>
+
+<div id="syndromeData" class="binary">
+
+-
+
+</div>
+
+</div>
+
+
+<div class="arrow">
+
+↓
+
+</div>
+
+
+<div class="box">
+
+<div class="label">
+
+복원 결과
+
+</div>
+
+<div id="decodedData" class="binary">
+
+-
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ================================================= -->
+
+<section id="analysis" class="page">
+
+<div class="panel">
+
+<h2>
+
+성능 분석
+
+</h2>
+
+<label>
+
+오류 확률
+
+<span id="probText">
+
+5%
+
+</span>
+
+</label>
+
+<input
+
+type="range"
+
+id="prob"
+
+min="0"
+
+max="20"
+
+value="5">
+
+<br><br>
+
+<label>
+
+오류 방식
+
+</label>
+
+<select id="mode">
+
+<option value="independent">
+
+독립 오류
+
+</option>
+
+<option value="burst">
+
+Burst Error
+
+</option>
+
+</select>
+
+<br><br>
+
+<label>
+
+실험 횟수
+
+</label>
+
+<select id="trial">
+
+<option>
+
+100
+
+</option>
+
+<option>
+
+1000
+
+</option>
+
+<option selected>
+
+10000
+
+</option>
+
+</select>
+
+<br><br>
+
+<button id="run">
+
+실험 시작
+
+</button>
+
+</div>
+
+
+<div class="panel">
+
+<h3>
+
+실험 결과
+
+</h3>
+
+<table>
+
+<tr>
+
+<th>
+
+복원 성공
+
+</th>
+
+<td id="success">
+
+-
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+복원 실패
+
+</th>
+
+<td id="fail">
+
+-
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+성공률
+
+</th>
+
+<td id="rate">
+
+-
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+이론값
+
+</th>
+
+<td id="theory">
+
+-
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="panel">
+
+<canvas id="graph"></canvas>
+
+</div>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
