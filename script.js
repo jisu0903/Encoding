@@ -824,9 +824,8 @@ runBtn.addEventListener(
 
 
 
-        let encoded =
-        encodeHamming(data);
-
+        let testEncoded =
+encodeHamming(data);
 
 
         let received;
@@ -841,8 +840,7 @@ runBtn.addEventListener(
 
 
             received =
-            randomError(encoded,p);
-
+burstError(encoded,p);
 
         }
 
