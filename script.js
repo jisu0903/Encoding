@@ -513,15 +513,11 @@ function step5(){
 /* ===========================================
    Hamming Lab
    Part 4
-   Visualization
+   Display Upgrade
 =========================================== */
 
 
-// ===========================================
-// 비트 문자열 → 비트 박스 표시
-// ===========================================
-
-function displayBits(element, data, error=-1){
+function displayBits(element,data,error=-1){
 
     if(data===""){
 
@@ -531,42 +527,36 @@ function displayBits(element, data, error=-1){
     }
 
 
-    let html="";
+    let result="";
 
 
     for(let i=0;i<data.length;i++){
 
-        let cls="bit";
-
-
         if(i===error){
 
-            cls += " error";
+            result +=
+            `<span class="bit error">${data[i]}</span>`;
 
         }
 
+        else{
 
-        html +=
-        `
-        <span class="${cls}">
-        ${data[i]}
-        </span>
-        `;
+            result +=
+            `<span class="bit">${data[i]}</span>`;
+
+        }
 
     }
 
 
-    element.innerHTML = html;
+    element.innerHTML=result;
 
 }
 
 
 
-// ===========================================
-// 기존 출력 방식 대신 비트박스 적용
-// ===========================================
-
 function updateVisualization(){
+
 
     displayBits(
         originalBox,
@@ -587,84 +577,84 @@ function updateVisualization(){
     );
 
 
-    if(decoded!==""){
+    displayBits(
+        decodedBox,
+        decoded
+    );
 
-        displayBits(
-            decodedBox,
-            decoded
-        );
-
-    }
 
 }
 
 
 
-// ===========================================
-// 기존 함수에 시각화 연결
-// ===========================================
+// 기존 STEP 함수 마지막에 자동 연결
 
+const originalStep0 = step0;
 
-const oldStep0 = step0;
-step0 = function(){
+step0=function(){
 
-    oldStep0();
+    originalStep0();
 
     updateVisualization();
 
-}
+};
 
 
 
-const oldStep1 = step1;
-step1 = function(){
+const originalStep1 = step1;
 
-    oldStep1();
+step1=function(){
 
-    updateVisualization();
-
-}
-
-
-
-const oldStep2 = step2;
-step2 = function(){
-
-    oldStep2();
+    originalStep1();
 
     updateVisualization();
 
-}
+};
 
 
 
-const oldStep3 = step3;
-step3 = function(){
+const originalStep2 = step2;
 
-    oldStep3();
+step2=function(){
 
-    updateVisualization();
-
-}
-
-
-
-const oldStep4 = step4;
-step4 = function(){
-
-    oldStep4();
+    originalStep2();
 
     updateVisualization();
 
-}
+};
 
 
 
-const oldStep5 = step5;
-step5 = function(){
+const originalStep3 = step3;
 
-    oldStep5();
+step3=function(){
+
+    originalStep3();
 
     updateVisualization();
 
-}
+};
+
+
+
+const originalStep4 = step4;
+
+step4=function(){
+
+    originalStep4();
+
+    updateVisualization();
+
+};
+
+
+
+const originalStep5 = step5;
+
+step5=function(){
+
+    originalStep5();
+
+    updateVisualization();
+
+};
