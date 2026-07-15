@@ -793,6 +793,7 @@ runBtn.addEventListener(
 
     let p =
     Number(prob.value)/100;
+   console.log("p=",p);
 
 
     let count =
