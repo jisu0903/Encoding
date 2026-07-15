@@ -959,44 +959,52 @@ decodeHamming(corrected);
 
 function burstError(code,p){
 
-
     let bits =
     code.split("");
 
 
-    if(Math.random()<p){
+    let errorStart = -1;
 
 
-        // 시작 위치
+    // 첫 오류 발생 위치 결정
+    for(let i=0;i<7;i++){
 
-        let start =
-        Math.floor(
-            Math.random()*7
-        );
+        if(Math.random()<p){
 
-
-        // 오류 길이 2~3bit
-
-        let length =
-        Math.floor(
-            Math.random()*2
-        )+2;
-
-
-
-        for(
-            let i=start;
-            i<start+length && i<7;
-            i++
-        ){
-
-            bits[i] =
-            bits[i]==="0"
-            ?"1"
-            :"0";
+            errorStart=i;
+            break;
 
         }
 
+    }
+
+
+    // 오류가 발생하면 주변으로 확산
+    if(errorStart!==-1){
+
+
+        for(
+            let i=Math.max(0,errorStart-1);
+            i<=Math.min(6,errorStart+1);
+            i++
+        ){
+
+            // 중심은 거의 발생,
+            // 주변은 일부 확률
+
+            if(
+                i===errorStart ||
+                Math.random()<0.7
+            ){
+
+                bits[i]=
+                bits[i]==="0"
+                ?"1"
+                :"0";
+
+            }
+
+        }
 
     }
 
@@ -1004,7 +1012,6 @@ function burstError(code,p){
     return bits.join("");
 
 }
-
 
 
 
