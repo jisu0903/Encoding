@@ -19,6 +19,38 @@ body{
     sans-serif;
 
     color:#222;
+   .bit{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    width:32px;
+
+    height:32px;
+
+    margin:3px;
+
+    border:1px solid #333;
+
+    border-radius:6px;
+
+    font-weight:bold;
+
+}
+
+
+.bit.error{
+
+    background:#ffdddd;
+
+    border-color:red;
+
+    color:red;
+
+}
 
     line-height:1.6;
 
