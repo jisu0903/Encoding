@@ -838,23 +838,23 @@ encodeHamming(data);
         // 오류 방식 선택
         // --------------------
 
-        if(mode.value==="independent"){
+       if(mode.value==="independent"){
 
 
-            received =
-burstError(encoded,p);
-
-        }
+    received =
+    randomError(testEncoded,p);
 
 
-        else{
+}
+
+else{
 
 
-            received =
-            burstError(encoded,p);
+    received =
+    burstError(testEncoded,p);
 
 
-        }
+}
 
 
 
