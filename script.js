@@ -874,12 +874,12 @@ burstError(encoded,p);
 
 
 
-        let decoded =
-        decodeHamming(corrected);
+        let testDecoded =
+decodeHamming(corrected);
 
 
 
-        if(decoded===data){
+        if(testDecoded===data){
 
             success++;
 
